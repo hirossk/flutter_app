@@ -8,11 +8,16 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
-      home: Text(
-        'Hello, Flutter World!',
-        style: TextStyle(fontSize: 32.0),
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Hello Flutter'),
+        ),
+        body: const Text(
+          'Hello Flutter World!!',
+          style: TextStyle(fontSize: 32.0, fontFamily: 'OpenSans'),
+        ),
       ),
     );
   }
