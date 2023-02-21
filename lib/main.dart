@@ -32,8 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('App Name'),
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+      body: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                   fontSize: 32.0,
                   color: const Color(0xff000000),
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w400,
                   fontFamily: "Roboto"),
             ),
             Text(
@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                   fontSize: 32.0,
                   color: const Color(0xff000000),
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w400,
                   fontFamily: "Roboto"),
             ),
             Text(
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(
                   fontSize: 32.0,
                   color: const Color(0xff000000),
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w400,
                   fontFamily: "Roboto"),
             )
           ]),
