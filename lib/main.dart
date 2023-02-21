@@ -32,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('App Name'),
       ),
-      body: Center(
+      body: Container(
         child: Text(
           "Hello Flutter!",
           style: TextStyle(
@@ -41,6 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
               fontWeight: FontWeight.w700,
               fontFamily: "Roboto"),
         ),
+        padding: const EdgeInsets.all(10.0),
+        alignment: Alignment.bottomCenter,
       ),
     );
   }
