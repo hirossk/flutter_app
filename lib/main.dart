@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors, sort_child_properties_last
 
 import 'package:flutter/material.dart';
 
@@ -86,7 +86,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 iconSize: 100.0,
                 color: Colors.red,
                 onPressed: buttonPressed,
-              )
+              ),
+              FloatingActionButton(
+                  child: const Icon(Icons.android), onPressed: buttonPressed)
             ]),
       ),
     );
