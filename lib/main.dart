@@ -64,7 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             color: Color(0xff000000),
                             fontWeight: FontWeight.w400,
                             fontFamily: "Roboto"),
-                      )))
+                      ))),
+              TextButton(
+                  onPressed: buttonPressed,
+                  child: const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Icon(
+                        Icons.android,
+                        size: 50.0,
+                      ))),
             ]),
       ),
     );
