@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,54 +16,63 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xffe91e63),
         canvasColor: const Color(0xfffafafa),
       ),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static final _janken = <String>['グー', 'チョキ', 'パー'];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('App Name'),
+        title: const Text('App Name'),
       ),
-      body: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "One",
-              style: TextStyle(
-                  fontSize: 32.0,
-                  color: const Color(0xff000000),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Roboto"),
-            ),
-            Text(
-              "Two",
-              style: TextStyle(
-                  fontSize: 32.0,
-                  color: const Color(0xff000000),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Roboto"),
-            ),
-            Text(
-              "Three",
-              style: TextStyle(
-                  fontSize: 32.0,
-                  color: const Color(0xff000000),
-                  fontWeight: FontWeight.w400,
-                  fontFamily: "Roboto"),
-            )
-          ]),
+      body: Center(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  _message,
+                  style: const TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: "Roboto"),
+                ),
+              ),
+              TextButton(
+                  onPressed: buttonPressed,
+                  child: const Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Text(
+                        "Push me!",
+                        style: TextStyle(
+                            fontSize: 32.0,
+                            color: Color(0xff000000),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Roboto"),
+                      )))
+            ]),
+      ),
     );
+  }
+
+  void buttonPressed() {
+    setState(() {
+      _message = (_janken..shuffle()).first;
+    });
   }
 }
