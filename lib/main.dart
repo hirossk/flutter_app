@@ -81,6 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
                         Icons.android,
                         size: 50.0,
                       ))),
+              IconButton(
+                icon: const Icon(Icons.insert_emoticon),
+                iconSize: 100.0,
+                color: Colors.red,
+                onPressed: buttonPressed,
+              )
             ]),
       ),
     );
