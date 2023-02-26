@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static var _message = 'ok.';
-  static var _checked = false;
+  static var _selected = 'A';
 
   @override
   Widget build(BuildContext context) {
@@ -53,39 +53,55 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontFamily: "Roboto"),
               ),
             ),
-            Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: <Widget>[
-                      Checkbox(
-                        value: _checked,
-                        onChanged: checkChanged,
-                      ),
-                      const Text(
-                        "Checkbox",
-                        style: TextStyle(
-                            fontSize: 28.0,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Roboto"),
-                      ),
-                      Switch(
-                        value: _checked,
-                        onChanged: checkChanged,
-                      )
-                    ])),
+            const Padding(
+              padding: EdgeInsets.all(10.0),
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Radio<String>(
+                    value: 'A',
+                    groupValue: _selected,
+                    onChanged: checkChanged,
+                  ),
+                  const Text(
+                    "radio A",
+                    style: TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Roboto"),
+                  )
+                ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Radio<String>(
+                    value: 'B',
+                    groupValue: _selected,
+                    onChanged: checkChanged,
+                  ),
+                  const Text(
+                    "radio B",
+                    style: TextStyle(
+                        fontSize: 28.0,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Roboto"),
+                  )
+                ]),
           ],
         ),
       ),
     );
   }
 
-  void checkChanged(bool? value) {
+  void checkChanged(String? value) {
     setState(() {
-      _checked = value!;
-      _message = value ? 'checked!' : 'not checked...';
+      _selected = value ?? 'nodata';
+      _message = 'select: $_selected';
     });
   }
 }
