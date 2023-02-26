@@ -70,6 +70,10 @@ class _MyHomePageState extends State<MyHomePage> {
                             fontSize: 28.0,
                             fontWeight: FontWeight.w400,
                             fontFamily: "Roboto"),
+                      ),
+                      Switch(
+                        value: _checked,
+                        onChanged: checkChanged,
                       )
                     ])),
           ],
