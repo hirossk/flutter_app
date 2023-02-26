@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static var _message = 'ok.';
-  static var _selected = 'One';
+  static var _value = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -56,39 +56,12 @@ class _MyHomePageState extends State<MyHomePage> {
             const Padding(
               padding: EdgeInsets.all(10.0),
             ),
-            DropdownButton<String>(
-              onChanged: popupSelected,
-              value: _selected,
-              style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 28.0,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Roboto'),
-              items: const <DropdownMenuItem<String>>[
-                DropdownMenuItem<String>(value: 'One', child: Text('One')),
-                DropdownMenuItem<String>(value: 'Two', child: Text('Two')),
-                DropdownMenuItem<String>(value: 'Three', child: Text('Three')),
-              ],
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: PopupMenuButton(
-                onSelected: (String value) => popupSelected(value),
-                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                  const PopupMenuItem(
-                    child: Text("One"),
-                    value: "One",
-                  ),
-                  const PopupMenuItem(
-                    child: Text("Two"),
-                    value: "Two",
-                  ),
-                  const PopupMenuItem(
-                    child: Text("Three"),
-                    value: "Three",
-                  ),
-                ],
-              ),
+            Slider(
+              onChanged: sliderChanged,
+              min: 0.0,
+              max: 100.0,
+              divisions: 20,
+              value: _value,
             ),
           ],
         ),
@@ -96,10 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void popupSelected(String? value) {
+  void sliderChanged(double value) {
     setState(() {
-      _selected = value ?? 'not selected...';
-      _message = 'select: $_selected';
+      _value = value.floorToDouble();
+      _message = 'set value: $_value';
     });
   }
 }
