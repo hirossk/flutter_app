@@ -70,6 +70,26 @@ class _MyHomePageState extends State<MyHomePage> {
                 DropdownMenuItem<String>(value: 'Three', child: Text('Three')),
               ],
             ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: PopupMenuButton(
+                onSelected: (String value) => popupSelected(value),
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  const PopupMenuItem(
+                    child: Text("One"),
+                    value: "One",
+                  ),
+                  const PopupMenuItem(
+                    child: Text("Two"),
+                    value: "Two",
+                  ),
+                  const PopupMenuItem(
+                    child: Text("Three"),
+                    value: "Three",
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
