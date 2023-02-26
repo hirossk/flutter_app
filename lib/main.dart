@@ -29,7 +29,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static var _message = 'ok.';
-  static final _controller = TextEditingController();
+  static var _checked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -54,26 +54,34 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                onChanged: textChanged,
-                controller: _controller,
-                style: const TextStyle(
-                    fontSize: 28.0,
-                    color: Color(0xffFF0000),
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Roboto"),
-              ),
-            ),
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                      Checkbox(
+                        value: _checked,
+                        onChanged: checkChanged,
+                      ),
+                      const Text(
+                        "Checkbox",
+                        style: TextStyle(
+                            fontSize: 28.0,
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Roboto"),
+                      )
+                    ])),
           ],
         ),
       ),
     );
   }
 
-  void textChanged(String val) {
+  void checkChanged(bool? value) {
     setState(() {
-      _message = val.toUpperCase();
+      _checked = value!;
+      _message = value ? 'checked!' : 'not checked...';
     });
   }
 }
