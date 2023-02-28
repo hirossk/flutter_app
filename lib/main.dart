@@ -21,9 +21,17 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// １つ目のスクリーン
-class FirstScreen extends StatelessWidget {
-  const FirstScreen({super.key});
+class FirstScreen extends StatefulWidget {
+  const FirstScreen({Key? key}) : super(key: key); // コンストラクタ
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _FirstScreenState createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  static final _controller = TextEditingController();
+  static var _input = '';
 
   @override
   Widget build(BuildContext context) {
@@ -31,55 +39,73 @@ class FirstScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: const Center(
-        child: Text('Home Screen', style: TextStyle(fontSize: 32.0)),
+      body: Column(
+        children: <Widget>[
+          const Text('Home Screen', style: TextStyle(fontSize: 32.0)),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: TextField(
+              controller: _controller,
+              style: const TextStyle(fontSize: 28.0),
+              onChanged: changeField,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             label: 'Home',
-            icon: Icon(Icons.home, size: 32),
+            icon: Icon(Icons.home),
           ),
           BottomNavigationBarItem(
             label: 'next',
-            icon: Icon(Icons.navigate_next, size: 32),
+            icon: Icon(Icons.navigate_next),
           ),
         ],
         onTap: (int value) {
           if (value == 1) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SecondScreen()),
+              MaterialPageRoute(builder: (context) => SecondScreen(_input)),
             );
           }
         },
       ),
     );
   }
+
+  void changeField(String val) => _input = val;
 }
 
-// ２つ目のスクリーン
 class SecondScreen extends StatelessWidget {
+  final String _value;
+
+  const SecondScreen(this._value, {super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Next"),
       ),
-      body: const Center(
-        child: Text('Next Screen', style: TextStyle(fontSize: 32.0)),
+      body: Center(
+        child: Text(
+          'you typed: "$_value".',
+          style: const TextStyle(fontSize: 32.0),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             label: 'prev',
-            icon: Icon(Icons.navigate_before, size: 32),
+            icon: Icon(Icons.navigate_before),
           ),
           BottomNavigationBarItem(
             label: '?',
-            icon: Icon(Icons.android, size: 32),
+            icon: Icon(Icons.android),
           ),
         ],
         onTap: (int value) {
