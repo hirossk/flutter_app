@@ -16,22 +16,18 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xff2196f3),
         canvasColor: const Color(0xfffafafa),
       ),
-      home: const FirstScreen(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const FirstScreen(),
+        '/second': (context) => SecondScreen('Second'),
+        '/third': (context) => SecondScreen('Third'),
+      },
     );
   }
 }
 
-class FirstScreen extends StatefulWidget {
-  const FirstScreen({Key? key}) : super(key: key); // コンストラクタ
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _FirstScreenState createState() => _FirstScreenState();
-}
-
-class _FirstScreenState extends State<FirstScreen> {
-  static final _controller = TextEditingController();
-  static var _input = '';
+class FirstScreen extends StatelessWidget {
+  const FirstScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +35,11 @@ class _FirstScreenState extends State<FirstScreen> {
       appBar: AppBar(
         title: const Text('Home'),
       ),
-      body: Column(
-        children: <Widget>[
-          const Text('Home Screen', style: TextStyle(fontSize: 32.0)),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: TextField(
-              controller: _controller,
-              style: const TextStyle(fontSize: 28.0),
-              onChanged: changeField,
-            ),
-          ),
-        ],
+      body: const Center(
+        child: Text(
+          'Home Screen',
+          style: TextStyle(fontSize: 32.0),
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 1,
@@ -66,23 +55,17 @@ class _FirstScreenState extends State<FirstScreen> {
         ],
         onTap: (int value) {
           if (value == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SecondScreen(_input)),
-            );
+            Navigator.pushNamed(context, '/second');
           }
         },
       ),
     );
   }
-
-  void changeField(String val) => _input = val;
 }
 
 class SecondScreen extends StatelessWidget {
   final String _value;
-
-  const SecondScreen(this._value, {super.key});
+  SecondScreen(this._value);
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +75,7 @@ class SecondScreen extends StatelessWidget {
       ),
       body: Center(
         child: Text(
-          'you typed: "$_value".',
+          '$_value Screen',
           style: const TextStyle(fontSize: 32.0),
         ),
       ),
@@ -110,6 +93,9 @@ class SecondScreen extends StatelessWidget {
         ],
         onTap: (int value) {
           if (value == 0) Navigator.pop(context);
+          if (value == 1) {
+            Navigator.pushNamed(context, '/third');
+          }
         },
       ),
     );
