@@ -29,7 +29,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static var _message = 'ok.';
-  static final _controller = TextEditingController();
+  static final _controller_v1 = TextEditingController();
+  static final _controller_v2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: TextField(
-                controller: _controller,
+                controller: _controller_v1,
                 style: const TextStyle(
                     fontSize: 28.0,
                     color: Color(0xffFF0000),
@@ -64,9 +65,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontFamily: "Roboto"),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextField(
+                controller: _controller_v2,
+                style: const TextStyle(
+                    fontSize: 28.0,
+                    color: Color(0xff0000FF),
+                    fontWeight: FontWeight.w400,
+                    fontFamily: "Roboto"),
+              ),
+            ),
             ElevatedButton(
                 child: const Text(
-                  "Push me!",
+                  "加算",
                   style: TextStyle(
                       fontSize: 32.0,
                       color: Color(0xff000000),
@@ -82,7 +94,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void buttonPressed() {
     setState(() {
-      _message = 'you said: ${_controller.text}';
+      var val1 = int.parse(_controller_v1.text);
+      var val2 = int.parse(_controller_v2.text);
+
+      _message = 'you said: ${val1 + val2}';
     });
   }
 }
