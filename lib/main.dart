@@ -65,7 +65,7 @@ class FirstScreen extends StatelessWidget {
           } else if (value == 2) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => ThirdScreen()),
+              MaterialPageRoute(builder: (context) => MyHomePage()),
             );
           }
         },
@@ -135,5 +135,75 @@ class ThirdScreen extends StatelessWidget {
         },
       ),
     );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  static var _message = 'ok.';
+  static var _index = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('My App'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Text(
+            _message,
+            style: const TextStyle(
+              fontSize: 32.0,
+            ),
+          ),
+          ListView(
+            shrinkWrap: true,
+            padding: const EdgeInsets.all(20.0),
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.android, size: 32),
+                title: const Text('first item', style: TextStyle(fontSize: 28)),
+                selected: _index == 1,
+                onTap: () {
+                  _index = 1;
+                  tapTile();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.favorite, size: 32),
+                title:
+                    const Text('second item', style: TextStyle(fontSize: 28)),
+                selected: _index == 2,
+                onTap: () {
+                  _index = 2;
+                  tapTile();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.home, size: 32),
+                title: const Text('third item', style: TextStyle(fontSize: 28)),
+                selected: _index == 3,
+                onTap: () {
+                  _index = 3;
+                  tapTile();
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void tapTile() {
+    setState(() {
+      _message = 'you tapped: No, $_index.';
+    });
   }
 }
