@@ -50,7 +50,10 @@ class _MyHomePageState extends State<MyHomePage>
     return Scaffold(
       appBar: AppBar(
         title: const Text('My App'),
-        bottom: TabBar(
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.blue,
+        child: TabBar(
           controller: _tabController,
           tabs: tabs,
         ),
