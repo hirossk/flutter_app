@@ -74,10 +74,16 @@ class MyPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint p = Paint();
-
-    Offset off = Offset(50.0, 50.0);
-    if (_img != null) {
-      canvas.drawImage(_img!, off, p);
+    final img = _img;
+    if (img != null) {
+      Rect r0 =
+          Rect.fromLTWH(0.0, 0.0, img.width.toDouble(), img.height.toDouble());
+      Rect r = const Rect.fromLTWH(50.0, 50.0, 100.0, 100.0);
+      canvas.drawImageRect(img, r0, r, p);
+      r = const Rect.fromLTWH(50.0, 250.0, 200.0, 100.0);
+      canvas.drawImageRect(img, r0, r, p);
+      r = const Rect.fromLTWH(250.0, 50.0, 100.0, 200.0);
+      canvas.drawImageRect(img, r0, r, p);
     }
   }
 
