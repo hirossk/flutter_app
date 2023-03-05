@@ -31,81 +31,44 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
-  late Animation<double> animation;
-  late AnimationController controller;
-
-  @override
-  void initState() {
-    super.initState();
-    controller =
-        AnimationController(duration: const Duration(seconds: 3), vsync: this);
-    animation = Tween<double>(begin: 0, end: pi * 2).animate(controller)
-      ..addListener(() {
-        setState(() {});
-      });
-    controller.repeat(reverse: false);
-  }
+class _MyHomePageState extends State<MyHomePage> {
+  bool flg = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         title: const Text(
           'App Name',
           style: TextStyle(fontSize: 30.0),
         ),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            const Padding(padding: EdgeInsets.all(10)),
-            Container(
-              width: 300,
-              height: 300,
-              child: CustomPaint(
-                painter: MyPainter(animation.value),
-                child: const Center(),
+            AnimatedAlign(
+              alignment: flg ? Alignment.topLeft : Alignment.topRight,
+              duration: const Duration(seconds: 1),
+              // ignore: sort_child_properties_last
+              child: Container(
+                color: Colors.red,
+                width: 100,
+                height: 100,
               ),
+              curve: Curves.linear,
             ),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            flg = !flg;
+          });
+        },
+        child: const Icon(Icons.star),
+      ),
     );
   }
-}
-
-class MyPainter extends CustomPainter {
-  final double value;
-
-  MyPainter(this.value);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint p = Paint();
-    canvas.save();
-
-    p.style = PaintingStyle.fill;
-    p.color = const Color.fromARGB(100, 255, 0, 255);
-    Rect r = const Rect.fromLTWH(0, 0, 250, 250);
-    canvas.translate(150, 250);
-    canvas.rotate(value);
-    canvas.translate(-125, -125);
-    canvas.drawRect(r, p);
-
-    canvas.restore();
-    p.style = PaintingStyle.stroke;
-    p.strokeWidth = 25;
-    p.color = const Color.fromARGB(100, 0, 255, 255);
-    r = const Rect.fromLTWH(0, 0, 250, 250);
-    canvas.translate(150, 250);
-    canvas.rotate(value * -1);
-    canvas.translate(-125, -125);
-    canvas.drawRect(r, p);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
 }
