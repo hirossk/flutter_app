@@ -47,16 +47,13 @@ class _MyHomePageState extends State<MyHomePage> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            AnimatedAlign(
-              alignment: flg ? Alignment.topLeft : Alignment.topRight,
+            AnimatedDefaultTextStyle(
               duration: const Duration(seconds: 1),
-              // ignore: sort_child_properties_last
-              child: Container(
-                color: Colors.red,
-                width: 100,
-                height: 100,
-              ),
-              curve: Curves.linear,
+              style: TextStyle(
+                  fontSize: flg ? 48 : 96,
+                  fontWeight: FontWeight.bold,
+                  color: flg ? Colors.red : Colors.blue),
+              child: const Text("Hello Flutter!"),
             ),
           ],
         ),
