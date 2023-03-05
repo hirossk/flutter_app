@@ -1,4 +1,6 @@
+// ignore_for_file: prefer_final_fields
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
 
 void main() {
@@ -31,8 +33,22 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static ui.Image? _img;
+  static bool _flg = false;
+
+  Future<void> loadAssetImage(String fname) async {
+    final bd = await rootBundle.load("assets/images/$fname");
+    final Uint8List u8lst = await Uint8List.view(bd.buffer);
+    final codec = await ui.instantiateImageCodec(u8lst);
+    final frameInfo = await codec.getNextFrame();
+    _img = frameInfo.image;
+    setState(() => _flg = true);
+  }
+
   @override
   Widget build(BuildContext context) {
+    loadAssetImage('image.jpg');
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -43,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         child: CustomPaint(
-          painter: MyPainter(),
+          painter: MyPainter(_img),
         ),
       ),
     );
@@ -51,23 +67,18 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class MyPainter extends CustomPainter {
+  ui.Image? _img;
+
+  MyPainter(this._img);
+
   @override
   void paint(Canvas canvas, Size size) {
-    ui.ParagraphBuilder builder = ui.ParagraphBuilder(
-      ui.ParagraphStyle(textDirection: TextDirection.ltr),
-    )
-      ..pushStyle(ui.TextStyle(color: Colors.red, fontSize: 48.0))
-      ..addText('Hello! ')
-      ..pushStyle(ui.TextStyle(color: Colors.blue[700], fontSize: 30.0))
-      ..addText('This is a sample of paragraph text. ')
-      ..pushStyle(ui.TextStyle(color: Colors.blue[200], fontSize: 30.0))
-      ..addText('You can draw MULTI-FONT text!');
+    Paint p = Paint();
 
-    ui.Paragraph paragraph = builder.build()
-      ..layout(const ui.ParagraphConstraints(width: 300.0));
-
-    Offset off = const Offset(50.0, 50.0);
-    canvas.drawParagraph(paragraph, off);
+    Offset off = Offset(50.0, 50.0);
+    if (_img != null) {
+      canvas.drawImage(_img!, off, p);
+    }
   }
 
   @override
