@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_final_fields
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -30,12 +31,21 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  static ValueNotifier<int> _value = ValueNotifier<int>(0);
+class _MyHomePageState extends State<MyHomePage>
+    with SingleTickerProviderStateMixin {
+  late Animation<double> animation;
+  late AnimationController controller;
 
   @override
   void initState() {
     super.initState();
+    controller =
+        AnimationController(duration: const Duration(seconds: 3), vsync: this);
+    animation = Tween<double>(begin: 0, end: pi * 2).animate(controller)
+      ..addListener(() {
+        setState(() {});
+      });
+    controller.repeat(reverse: false);
   }
 
   @override
@@ -56,17 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
               width: 300,
               height: 300,
               child: CustomPaint(
-                painter: MyPainter(_value),
+                painter: MyPainter(animation.value),
                 child: const Center(),
               ),
-            ),
-            const Padding(padding: EdgeInsets.all(5)),
-            ElevatedButton(
-              child: const Text(
-                "Click",
-                style: TextStyle(fontSize: 32),
-              ),
-              onPressed: () => _value.value++,
             ),
           ],
         ),
@@ -76,25 +78,32 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class MyPainter extends CustomPainter {
-  final ValueNotifier<int> _value;
+  final double value;
 
-  MyPainter(this._value);
+  MyPainter(this.value);
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint p = Paint();
+    canvas.save();
+
     p.style = PaintingStyle.fill;
-    p.color = const Color.fromARGB(50, 0, 255, 255);
-    Rect r;
-    for (var i = 0; i < _value.value; i++) {
-      r = Rect.fromLTWH(10 + i * 20, 10 + i * 20, 100, 100);
-      canvas.drawRect(r, p);
-    }
-    r = Rect.fromLTWH(0, 0, size.width, size.height);
-    p.style = PaintingStyle.stroke;
-    p.color = const Color.fromARGB(255, 100, 100, 100);
+    p.color = const Color.fromARGB(100, 255, 0, 255);
+    Rect r = const Rect.fromLTWH(0, 0, 250, 250);
+    canvas.translate(150, 250);
+    canvas.rotate(value);
+    canvas.translate(-125, -125);
     canvas.drawRect(r, p);
-    if (_value.value > 10) _value.value = 0;
+
+    canvas.restore();
+    p.style = PaintingStyle.stroke;
+    p.strokeWidth = 25;
+    p.color = const Color.fromARGB(100, 0, 255, 255);
+    r = const Rect.fromLTWH(0, 0, 250, 250);
+    canvas.translate(150, 250);
+    canvas.rotate(value * -1);
+    canvas.translate(-125, -125);
+    canvas.drawRect(r, p);
   }
 
   @override
