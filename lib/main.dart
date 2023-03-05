@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_final_fields
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'dart:ui' as ui;
 
 void main() {
   runApp(const MyApp());
@@ -33,22 +31,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  static ui.Image? _img;
-  static bool _flg = false;
-
-  Future<void> loadAssetImage(String fname) async {
-    final bd = await rootBundle.load("assets/images/$fname");
-    final Uint8List u8lst = await Uint8List.view(bd.buffer);
-    final codec = await ui.instantiateImageCodec(u8lst);
-    final frameInfo = await codec.getNextFrame();
-    _img = frameInfo.image;
-    setState(() => _flg = true);
-  }
-
   @override
   Widget build(BuildContext context) {
-    loadAssetImage('image.jpg');
-
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
@@ -59,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         child: CustomPaint(
-          painter: MyPainter(_img),
+          painter: MyPainter(),
         ),
       ),
     );
@@ -67,24 +51,20 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 class MyPainter extends CustomPainter {
-  ui.Image? _img;
-
-  MyPainter(this._img);
-
   @override
   void paint(Canvas canvas, Size size) {
+    Path path = Path();
+    Rect r = const Rect.fromLTWH(50.0, 50.0, 75.0, 75.0);
+    path.addOval(r);
+    r = const Rect.fromLTWH(75.0, 75.0, 125.0, 125.0);
+    path.addOval(r);
+    r = const Rect.fromLTWH(125.0, 125.0, 175.0, 175.0);
+    path.addOval(r);
+
     Paint p = Paint();
-    final img = _img;
-    if (img != null) {
-      Rect r0 =
-          Rect.fromLTWH(0.0, 0.0, img.width.toDouble(), img.height.toDouble());
-      Rect r = const Rect.fromLTWH(50.0, 50.0, 100.0, 100.0);
-      canvas.drawImageRect(img, r0, r, p);
-      r = const Rect.fromLTWH(50.0, 250.0, 200.0, 100.0);
-      canvas.drawImageRect(img, r0, r, p);
-      r = const Rect.fromLTWH(250.0, 50.0, 100.0, 200.0);
-      canvas.drawImageRect(img, r0, r, p);
-    }
+    p.color = const Color.fromARGB(150, 255, 0, 0);
+    p.style = PaintingStyle.fill;
+    canvas.drawPath(path, p);
   }
 
   @override
