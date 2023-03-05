@@ -54,22 +54,13 @@ class MyPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint p = Paint();
 
-    // 正円の描画
-    p.style = PaintingStyle.fill;
-    p.color = const Color.fromARGB(150, 0, 200, 255);
-    Offset ctr = const Offset(100.0, 100.0);
-    canvas.drawCircle(ctr, 75.0, p);
-
-    // 楕円１の描画
     p.style = PaintingStyle.stroke;
-    p.color = const Color.fromARGB(150, 200, 0, 255);
-    p.strokeWidth = 10.0;
-    Rect r = const Rect.fromLTWH(100.0, 50.0, 200.0, 150.0);
-    canvas.drawOval(r, p);
-
-    // 楕円２の描画
-    r = const Rect.fromLTWH(50.0, 100.0, 150.0, 200.0);
-    canvas.drawOval(r, p);
+    p.strokeWidth = 5.0;
+    p.color = const Color.fromARGB(150, 0, 200, 255);
+    for (var i = 0; i <= 10; i++) {
+      Rect r = Rect.fromLTRB(50.0 + 20 * i, 50.0, 50.0, 250.0 - 20 * i);
+      canvas.drawLine(r.topLeft, r.bottomRight, p);
+    }
   }
 
   @override
