@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_final_fields
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 void main() {
   runApp(const MyApp());
@@ -32,54 +31,56 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  static List<Offset> _points = [];
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      appBar: AppBar(
-        title: const Text(
-          'App Name',
-          style: TextStyle(fontSize: 30.0),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        appBar: AppBar(
+          title: const Text(
+            'App Name',
+            style: TextStyle(fontSize: 30.0),
+          ),
         ),
-      ),
-      body: Container(
-        child: CustomPaint(
-          painter: MyPainter(),
-        ),
-      ),
-    );
+        body: Center(
+          child: Listener(
+            onPointerDown: _addPoint,
+            child: CustomPaint(
+              painter: MyPainter(_points),
+              child: const Center(),
+            ),
+          ),
+        ));
+  }
+
+  void _addPoint(PointerDownEvent event) {
+    setState(() {
+      _points.add(event.localPosition);
+    });
   }
 }
 
 class MyPainter extends CustomPainter {
+  final List<Offset> _points;
+
+  MyPainter(this._points);
+
   @override
   void paint(Canvas canvas, Size size) {
-    Path path = Path();
-    Rect r = const Rect.fromLTWH(50.0, 50.0, 75.0, 75.0);
-    path.addOval(r);
-    r = const Rect.fromLTWH(75.0, 75.0, 125.0, 125.0);
-    path.addOval(r);
-    r = const Rect.fromLTWH(125.0, 125.0, 175.0, 175.0);
-    path.addOval(r);
-
-    canvas.save();
-
     Paint p = Paint();
-    p.color = const Color.fromARGB(150, 255, 0, 0);
+
     p.style = PaintingStyle.fill;
-    canvas.drawPath(path, p);
-
-    canvas.translate(0.0, 100.0);
-    p.color = const Color.fromARGB(150, 0, 0, 255);
-    canvas.drawPath(path, p);
-
-    p.color = const Color.fromARGB(150, 0, 255, 0);
-    canvas.rotate(-0.5 * pi);
-    canvas.translate(-500.0, 50.0);
-    canvas.scale(1 * 1.5);
-    canvas.drawPath(path, p);
-
-    canvas.restore();
+    p.color = const Color.fromARGB(100, 0, 200, 100);
+    for (var pos in _points) {
+      Rect r = Rect.fromLTWH(pos.dx - 25, pos.dy - 25, 50.0, 50.0);
+      canvas.drawOval(r, p);
+    }
   }
 
   @override
