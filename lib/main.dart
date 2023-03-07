@@ -40,7 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // Cardを作成する
       body: InkWell(
         onTap: tapTile,
-        child: CardExample(),
+        child: Column(
+          children: [CardExample(), CardExample(), CardExample()],
+        ),
       ),
     );
   }
