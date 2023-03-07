@@ -35,16 +35,19 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My App'),
+        title: Text('$_message'),
       ),
       // Cardを作成する
-      body: const SizedBox(
-        height: 200,
-        width: 300,
-        child: Card(
-          child: Text(
-            'Flutter Card Test',
-            style: TextStyle(color: Colors.black),
+      body: InkWell(
+        onTap: tapTile,
+        child: const SizedBox(
+          height: 200,
+          width: 300,
+          child: Card(
+            child: Text(
+              'Flutter Card Test',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         ),
       ),
@@ -53,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void tapTile() {
     setState(() {
-      _message = 'you tapped: No, $_index.';
+      _message = 'you tapped: Card';
     });
   }
 }
