@@ -37,49 +37,16 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('My App'),
       ),
-      body: Column(
-        children: <Widget>[
-          Text(
-            _message,
-            style: const TextStyle(
-              fontSize: 32.0,
-            ),
+      // Cardを作成する
+      body: const SizedBox(
+        height: 200,
+        width: 300,
+        child: Card(
+          child: Text(
+            'Flutter Card Test',
+            style: TextStyle(color: Colors.black),
           ),
-          ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(20.0),
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.android, size: 32),
-                title: const Text('first item', style: TextStyle(fontSize: 28)),
-                selected: _index == 1,
-                onTap: () {
-                  _index = 1;
-                  tapTile();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.favorite, size: 32),
-                title:
-                    const Text('second item', style: TextStyle(fontSize: 28)),
-                selected: _index == 2,
-                onTap: () {
-                  _index = 2;
-                  tapTile();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.home, size: 32),
-                title: const Text('third item', style: TextStyle(fontSize: 28)),
-                selected: _index == 3,
-                onTap: () {
-                  _index = 3;
-                  tapTile();
-                },
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
