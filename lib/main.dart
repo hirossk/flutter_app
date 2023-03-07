@@ -34,9 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("ListViewデモ"),
       ),
-      body: ListView.builder(itemBuilder: (BuildContext context, int index) {
-        return Text(index.toString());
-      }),
+      body: ListView.builder(
+        itemBuilder: (BuildContext context, int index) {
+          return Text(index.toString());
+        },
+        itemCount: 10,
+      ),
     );
   }
 }
