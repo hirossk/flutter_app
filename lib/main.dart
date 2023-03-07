@@ -30,63 +30,48 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static var _message = 'ok.';
   static var _index = 0;
+  final List<String> items = [
+    'item001',
+    'item002',
+    'item003',
+    'item004',
+    'item005',
+    'item006',
+    'item007',
+    'item008',
+    'item009',
+    'item010',
+    'item11',
+    'item12',
+    'item13',
+    'item14',
+    'item15',
+    'item16',
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My App'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Text(
-            _message,
-            style: const TextStyle(
-              fontSize: 32.0,
-            ),
-          ),
-          ListView(
-            shrinkWrap: true,
-            padding: const EdgeInsets.all(20.0),
-            children: <Widget>[
-              ListTile(
-                leading: const Icon(Icons.android, size: 32),
-                title: const Text('first item', style: TextStyle(fontSize: 28)),
-                selected: _index == 1,
-                onTap: () {
-                  _index = 1;
-                  tapTile();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.favorite, size: 32),
-                title:
-                    const Text('second item', style: TextStyle(fontSize: 28)),
-                selected: _index == 2,
-                onTap: () {
-                  _index = 2;
-                  tapTile();
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.home, size: 32),
-                title: const Text('third item', style: TextStyle(fontSize: 28)),
-                selected: _index == 3,
-                onTap: () {
-                  _index = 3;
-                  tapTile();
-                },
-              ),
-            ],
-          ),
-        ],
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('ListViewデモ'),
+        ),
+        body: ListView.builder(
+          itemCount: items.length, //要素の数　表示するデータ数の最大値（texts　listの最大値）
+          //指定した要素の数分を生成
+          itemBuilder: (context, index) {
+            return ListTile(
+              onTap: onTapped,
+              leading: Icon(Icons.person),
+              title: Text('${items[index]}'),
+            );
+          },
+        ),
       ),
     );
   }
 
-  void tapTile() {
-    setState(() {
-      _message = 'you tapped: No, $_index.';
-    });
+  void onTapped() {
+    setState(() {});
   }
 }
