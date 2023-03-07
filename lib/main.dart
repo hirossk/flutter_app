@@ -38,11 +38,17 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('$_message'),
       ),
       // Cardを作成する
-      body: InkWell(
-        onTap: tapTile,
-        child: Column(
-          children: [CardExample(), CardExample(), CardExample()],
-        ),
+      body: Column(
+        children: [
+          InkWell(
+            onTap: tapTile,
+            child: CardExample('One'),
+          ),
+          InkWell(
+            onTap: tapTile,
+            child: CardExample('Two'),
+          ),
+        ],
       ),
     );
   }
@@ -54,8 +60,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class CardExample extends StatelessWidget {
-  const CardExample({super.key});
+class CardExample extends StatefulWidget {
+  var _message;
+  CardExample(this._message);
+
+  @override
+  State<CardExample> createState() => _CardExampleState(_message);
+}
+
+class _CardExampleState extends State<CardExample> {
+  var _message;
+
+  _CardExampleState(this._message);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +80,7 @@ class CardExample extends StatelessWidget {
       width: 300,
       child: Card(
         child: Text(
-          'Flutter Card Test',
+          'Flutter Card $_message',
           style: TextStyle(color: Colors.black),
         ),
       ),
