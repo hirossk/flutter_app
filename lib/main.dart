@@ -37,15 +37,18 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return Card(
-            child: Padding(
-              child: Text(
-                '$index',
-                style: TextStyle(fontSize: 22.0),
+          return Container(
+              decoration: const BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(color: Colors.black38),
+                ),
               ),
-              padding: EdgeInsets.all(20.0),
-            ),
-          );
+              child: ListTile(
+                leading: const Icon(Icons.flight_land),
+                title: Text('$index'),
+                subtitle: Text('&listItem'),
+                onTap: () {/* react to the tile being tapped */},
+              ));
         },
         itemCount: listItem.length,
       ),
