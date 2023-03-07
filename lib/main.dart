@@ -28,6 +28,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var listItem = ["one", "two", "three"];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,9 +37,17 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView.builder(
         itemBuilder: (BuildContext context, int index) {
-          return Text(index.toString());
+          return Card(
+            child: Padding(
+              child: Text(
+                '$index',
+                style: TextStyle(fontSize: 22.0),
+              ),
+              padding: EdgeInsets.all(20.0),
+            ),
+          );
         },
-        itemCount: 10,
+        itemCount: listItem.length,
       ),
     );
   }
