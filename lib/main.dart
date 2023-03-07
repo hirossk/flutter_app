@@ -28,37 +28,38 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var listItem = ["one", "two", "three"];
+  var listItem = [1, 2, 3];
+
+  Future<void> _refresh() {
+    return Future.sync(() {
+      setState(() {
+        listItem = listItem.map((item) => item + 1).toList();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("ListViewデモ"),
-      ),
-      body: Column(
-        children: createList(),
-      ),
-    );
-  }
-
-  List<Widget> createList() {
-    final size = MediaQuery.of(context).size;
-    return listItem
-        .map((item) => Container(
-              width: size.width,
-              decoration: const BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(color: Colors.black38),
-                ),
-              ),
+      appBar: AppBar(title: Text('List Test')),
+      backgroundColor: Colors.purple,
+      body: RefreshIndicator(
+        child: ListView.builder(
+          itemBuilder: (BuildContext context, int index) {
+            return Card(
               child: Padding(
                 child: Text(
-                  '$item',
+                  listItem[index].toString(),
                   style: TextStyle(fontSize: 22.0),
                 ),
                 padding: EdgeInsets.all(20.0),
               ),
-            ))
-        .toList();
+            );
+          },
+          itemCount: listItem.length,
+        ),
+        onRefresh: _refresh,
+      ),
+    );
   }
 }
