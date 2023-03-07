@@ -40,16 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
       // Cardを作成する
       body: InkWell(
         onTap: tapTile,
-        child: const SizedBox(
-          height: 200,
-          width: 300,
-          child: Card(
-            child: Text(
-              'Flutter Card Test',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
+        child: CardExample(),
       ),
     );
   }
@@ -58,5 +49,23 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _message = 'you tapped: Card';
     });
+  }
+}
+
+class CardExample extends StatelessWidget {
+  const CardExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      width: 300,
+      child: Card(
+        child: Text(
+          'Flutter Card Test',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
   }
 }
