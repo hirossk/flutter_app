@@ -35,23 +35,30 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("ListViewデモ"),
       ),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
+      body: Column(
+        children: createList(),
+      ),
+    );
+  }
+
+  List<Widget> createList() {
+    final size = MediaQuery.of(context).size;
+    return listItem
+        .map((item) => Container(
+              width: size.width,
               decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(color: Colors.black38),
                 ),
               ),
-              child: ListTile(
-                leading: const Icon(Icons.flight_land),
-                title: Text('$index'),
-                subtitle: Text('&listItem'),
-                onTap: () {/* react to the tile being tapped */},
-              ));
-        },
-        itemCount: listItem.length,
-      ),
-    );
+              child: Padding(
+                child: Text(
+                  '$item',
+                  style: TextStyle(fontSize: 22.0),
+                ),
+                padding: EdgeInsets.all(20.0),
+              ),
+            ))
+        .toList();
   }
 }
