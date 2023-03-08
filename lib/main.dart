@@ -40,12 +40,34 @@ class _MyHomePageState extends State<MyHomePage> {
       // Cardを作成する
       body: const SizedBox(
         height: 200,
-        width: 300,
+        width: 450,
         child: Card(
-          child: Text(
-            'Flutter Card Test',
-            style: TextStyle(color: Colors.black),
-          ),
+          child: Row(children: [
+            Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                'アイコン',
+                style: TextStyle(fontSize: 32.0),
+              ),
+            ),
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Text(
+                    '出身地',
+                    style: TextStyle(fontSize: 32.0),
+                    textAlign: TextAlign.left,
+                  )),
+              Text(
+                '好きな色',
+                style: TextStyle(fontSize: 32.0, color: Colors.lightBlue),
+              ),
+              Text(
+                '好きな食べ物：柿',
+                style: TextStyle(fontSize: 32.0, color: Colors.orange),
+              ),
+            ])
+          ]),
         ),
       ),
     );
