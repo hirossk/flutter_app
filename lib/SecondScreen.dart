@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'FirstScreen.dart';
+import 'SecondScreen.dart';
+import 'ThirdScreen.dart';
+import 'FourthScreen.dart';
 
 // ２つ目のスクリーン
 class SecondScreen extends StatelessWidget {
@@ -18,14 +23,14 @@ class SecondScreen extends StatelessWidget {
             icon: Icon(Icons.home, size: 32),
           ),
           BottomNavigationBarItem(
-            label: '',
+            label: 'Second',
             icon: Icon(Icons.home, size: 32),
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: 'Third',
             icon: Icon(Icons.home, size: 32),
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: 'Fourth',
             icon: Icon(Icons.home, size: 32),
           ),

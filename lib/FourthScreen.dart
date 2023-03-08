@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+import 'FirstScreen.dart';
+import 'SecondScreen.dart';
+import 'ThirdScreen.dart';
+import 'FourthScreen.dart';
+
 // ３つ目のスクリーン
 class FourthScreen extends StatelessWidget {
   @override
@@ -20,11 +26,11 @@ class FourthScreen extends StatelessWidget {
             label: 'Second',
             icon: Icon(Icons.home, size: 32),
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: 'Third',
             icon: Icon(Icons.home, size: 32),
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: 'Fourth',
             icon: Icon(Icons.home, size: 32),
           ),
@@ -33,7 +39,7 @@ class FourthScreen extends StatelessWidget {
           if (value == 0) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => FourthScreen()),
+              MaterialPageRoute(builder: (context) => FirstScreen()),
             );
           }
         },
