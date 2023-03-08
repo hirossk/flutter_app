@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return InkWell(
             child: createCard(index),
             onTap: () {
-              tapCard(index);
+              tapCard(context, index);
             },
           );
         },
@@ -54,10 +54,21 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void tapCard(var index) {
+  void tapCard(BuildContext context, var index) {
     setState(() {
       _message = 'you tapped: No, $index.';
     });
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('詳細画面'),
+        content: createCardMini(index),
+        actions: [
+          TextButton(
+              child: Text('Hide'), onPressed: () => Navigator.pop(context)),
+        ],
+      ),
+    );
   }
 
   Widget createCard(var index) {
@@ -88,6 +99,41 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '好きな食べ物：柿',
               style: TextStyle(fontSize: 32.0, color: Colors.orange),
+            ),
+          ])
+        ]),
+      ),
+    );
+  }
+
+  Widget createCardMini(var index) {
+    return SizedBox(
+      height: 200,
+      width: 300,
+      child: Card(
+        child: Row(children: [
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              '${namelist[index]}',
+              style: TextStyle(fontSize: 20.0),
+            ),
+          ),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  '出身地:${addrlist[index]}',
+                  style: TextStyle(fontSize: 20.0),
+                  textAlign: TextAlign.left,
+                )),
+            Text(
+              '好きな色',
+              style: TextStyle(fontSize: 20.0, color: Colors.lightBlue),
+            ),
+            Text(
+              '好きな食べ物：柿',
+              style: TextStyle(fontSize: 20.0, color: Colors.orange),
             ),
           ])
         ]),
