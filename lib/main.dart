@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:ui' as ui;
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,63 +28,38 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final _controller = TextEditingController();
-  final _fname = 'flutter_sampledata.txt';
+  final _fname = 'assets/documents/data.txt';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          children: <Widget>[
-            const Text(
-              'FILE ACCESS.',
-              style: TextStyle(fontSize: 32, fontWeight: ui.FontWeight.w500),
-            ),
-            const Padding(padding: EdgeInsets.all(10.0)),
-            TextField(
-              controller: _controller,
-              style: const TextStyle(fontSize: 24),
-              minLines: 1,
-              maxLines: 5,
-            )
-          ],
+        appBar: AppBar(
+          title: const Text('Home'),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white,
-        currentIndex: 0,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            label: 'Save',
-            icon: Icon(Icons.save, color: Colors.white, size: 32),
+        body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            children: <Widget>[
+              const Text(
+                'RESOURCE ACCESS.',
+                style: TextStyle(fontSize: 32, fontWeight: ui.FontWeight.w500),
+              ),
+              const Padding(padding: EdgeInsets.all(10.0)),
+              TextField(
+                controller: _controller,
+                style: const TextStyle(
+                  fontSize: 24,
+                ),
+                minLines: 1,
+                maxLines: 5,
+              )
+            ],
           ),
-          BottomNavigationBarItem(
-            label: 'Load',
-            icon: Icon(Icons.open_in_new, color: Colors.white, size: 32),
-          ),
-        ],
-        onTap: (int value) async {
-          switch (value) {
-            case 0:
-              saveIt(_controller.text);
-              setState(() {
-                _controller.text = '';
-              });
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => const AlertDialog(
-                        title: Text("saved!"),
-                        content: Text("save message to file."),
-                      ));
-              break;
-            case 1:
-              String value = await loadIt();
+        ),
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.open_in_new),
+            onPressed: () async {
+              final value = await loadIt();
               setState(() {
                 _controller.text = value;
               });
@@ -94,31 +68,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   context: context,
                   builder: (BuildContext context) => const AlertDialog(
                         title: Text("loaded!"),
-                        content: Text("load message from file."),
+                        content: Text("load message from Asset."),
                       ));
-              break;
-            default:
-              print('no defalut.');
-          }
-        },
-      ),
-    );
+            }));
   }
 
-  Future<File> getDataFile(String filename) async {
-    final directory = await getApplicationDocumentsDirectory();
-    return File('${directory.path}/$filename');
-  }
-
-  void saveIt(String value) async {
-    final file = await getDataFile(_fname);
-    file.writeAsString(value);
+  Future<String> getDataAsset(String path) async {
+    return await rootBundle.loadString(path);
   }
 
   Future<String> loadIt() async {
     try {
-      final file = await getDataFile(_fname);
-      return file.readAsString();
+      final res = await getDataAsset(_fname);
+      return res;
     } catch (e) {
       return '*** no data ***';
     }
