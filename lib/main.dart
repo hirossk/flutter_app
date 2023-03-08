@@ -30,52 +30,68 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static var _message = 'ok.';
   static var _index = 0;
+  var namelist = ['sasaki', 'naoi', 'ogawa'];
+  var addrlist = ['kiyosato', 'sapporo', 'otaru'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My App'),
+        title: Text('$_message'),
       ),
       // Cardを作成する
-      body: const SizedBox(
-        height: 200,
-        width: 450,
-        child: Card(
-          child: Row(children: [
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                'アイコン',
-                style: TextStyle(fontSize: 32.0),
-              ),
-            ),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    '出身地',
-                    style: TextStyle(fontSize: 32.0),
-                    textAlign: TextAlign.left,
-                  )),
-              Text(
-                '好きな色',
-                style: TextStyle(fontSize: 32.0, color: Colors.lightBlue),
-              ),
-              Text(
-                '好きな食べ物：柿',
-                style: TextStyle(fontSize: 32.0, color: Colors.orange),
-              ),
-            ])
-          ]),
-        ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return InkWell(
+            child: createCard(index),
+            onTap: () {
+              tapCard(index);
+            },
+          );
+        },
+        itemCount: namelist.length,
       ),
     );
   }
 
-  void tapTile() {
+  void tapCard(var index) {
     setState(() {
-      _message = 'you tapped: No, $_index.';
+      _message = 'you tapped: No, $index.';
     });
+  }
+
+  Widget createCard(var index) {
+    return SizedBox(
+      height: 200,
+      width: 450,
+      child: Card(
+        child: Row(children: [
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Text(
+              '${namelist[index]}',
+              style: TextStyle(fontSize: 32.0),
+            ),
+          ),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  '出身地:${addrlist[index]}',
+                  style: TextStyle(fontSize: 32.0),
+                  textAlign: TextAlign.left,
+                )),
+            Text(
+              '好きな色',
+              style: TextStyle(fontSize: 32.0, color: Colors.lightBlue),
+            ),
+            Text(
+              '好きな食べ物：柿',
+              style: TextStyle(fontSize: 32.0, color: Colors.orange),
+            ),
+          ])
+        ]),
+      ),
+    );
   }
 }
