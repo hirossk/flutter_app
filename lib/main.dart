@@ -1,14 +1,11 @@
-// ignore_for_file: prefer_final_fields
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'dart:ui' as ui;
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,43 +24,103 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool flg = false;
+  final _controller = TextEditingController();
+  final _fname = 'flutter_sampledata.txt';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'App Name',
-          style: TextStyle(fontSize: 30.0),
-        ),
+        title: const Text('Home'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          children: [
-            AnimatedContainer(
-              duration: const Duration(seconds: 1),
-              color: flg ? Colors.red : Colors.yellow,
-              width: flg ? 100 : 300,
-              height: flg ? 300 : 100,
+          children: <Widget>[
+            const Text(
+              'FILE ACCESS.',
+              style: TextStyle(fontSize: 32, fontWeight: ui.FontWeight.w500),
             ),
+            const Padding(padding: EdgeInsets.all(10.0)),
+            TextField(
+              controller: _controller,
+              style: const TextStyle(fontSize: 24),
+              minLines: 1,
+              maxLines: 5,
+            )
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            flg = !flg;
-          });
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        currentIndex: 0,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            label: 'Save',
+            icon: Icon(Icons.save, color: Colors.white, size: 32),
+          ),
+          BottomNavigationBarItem(
+            label: 'Load',
+            icon: Icon(Icons.open_in_new, color: Colors.white, size: 32),
+          ),
+        ],
+        onTap: (int value) async {
+          switch (value) {
+            case 0:
+              saveIt(_controller.text);
+              setState(() {
+                _controller.text = '';
+              });
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                        title: Text("saved!"),
+                        content: Text("save message to file."),
+                      ));
+              break;
+            case 1:
+              String value = await loadIt();
+              setState(() {
+                _controller.text = value;
+              });
+              // ignore: use_build_context_synchronously
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                        title: Text("loaded!"),
+                        content: Text("load message from file."),
+                      ));
+              break;
+            default:
+              print('no defalut.');
+          }
         },
-        child: const Icon(Icons.star),
       ),
     );
+  }
+
+  Future<File> getDataFile(String filename) async {
+    final directory = await getApplicationDocumentsDirectory();
+    return File('${directory.path}/$filename');
+  }
+
+  void saveIt(String value) async {
+    final file = await getDataFile(_fname);
+    file.writeAsString(value);
+  }
+
+  Future<String> loadIt() async {
+    try {
+      final file = await getDataFile(_fname);
+      return file.readAsString();
+    } catch (e) {
+      return '*** no data ***';
+    }
   }
 }
