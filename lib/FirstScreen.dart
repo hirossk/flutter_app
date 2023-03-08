@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'FirstScreen.dart';
+import 'SecondScreen.dart';
+import 'ThirdScreen.dart';
+import 'FourthScreen.dart';
 
 // １つ目のスクリーン
 class FirstScreen extends StatelessWidget {
@@ -10,7 +15,7 @@ class FirstScreen extends StatelessWidget {
         title: const Text('First'),
       ),
       body: const Center(
-        child: Text('Home Screen', style: TextStyle(fontSize: 32.0)),
+        child: Text('First Screen', style: TextStyle(fontSize: 32.0)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
@@ -20,14 +25,14 @@ class FirstScreen extends StatelessWidget {
             icon: Icon(Icons.home, size: 32),
           ),
           BottomNavigationBarItem(
-            label: '',
+            label: 'Second',
             icon: Icon(Icons.home, size: 32),
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: 'Third',
             icon: Icon(Icons.home, size: 32),
           ),
-                    BottomNavigationBarItem(
+          BottomNavigationBarItem(
             label: 'Fourth',
             icon: Icon(Icons.home, size: 32),
           ),
