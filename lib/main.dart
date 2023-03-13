@@ -31,8 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final _controller = TextEditingController();
   static const host = 'baconipsum.com';
   static const path = '/api/?type=meat-and-filler&paras=1&format=text';
-  static const url =
-      'https://baconipsum.com/api/?type=meat-and-filler&paras=1&format=text';
+  static const url = 'https://jsonplaceholder.typicode.com/posts';
 
   @override
   Widget build(BuildContext context) {
